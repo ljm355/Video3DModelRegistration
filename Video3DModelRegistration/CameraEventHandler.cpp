@@ -21,10 +21,12 @@ bool CameraEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActi
 
 	if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN)
 	{
+		printf("%d down\n", ea.getKey());
 		_keydownmap[ea.getKey()] = true;
 	}
-	if (ea.getEventType() == osgGA::GUIEventAdapter::KEYUP)
+	else if (ea.getEventType() == osgGA::GUIEventAdapter::KEYUP)
 	{
+		printf("%d up\n", ea.getKey());
 		_keydownmap[ea.getKey()] = false;
 	}
 	if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN)
@@ -54,12 +56,12 @@ bool CameraEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActi
 			else if (_keydownmap[osgGA::GUIEventAdapter::KEY_H] == true)
 			{
 				if (_cameraParams->fovx < 180)
-					_cameraParams->fovx += 1;
+					_cameraParams->fovx -= 1;
 			}
 			else if (_keydownmap[osgGA::GUIEventAdapter::KEY_V] == true)
 			{
 				if (_cameraParams->fovy < 180)
-					_cameraParams->fovy += 1;
+					_cameraParams->fovy -= 1;
 			}
 		}
 		else if (ea.getKey() == 61 || ea.getKey() == 64451)
@@ -86,12 +88,12 @@ bool CameraEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActi
 			else if (_keydownmap[osgGA::GUIEventAdapter::KEY_H] == true)
 			{
 				if (_cameraParams->fovx > 0)
-					_cameraParams->fovx -= 1;
+					_cameraParams->fovx += 1;
 			}
 			else if (_keydownmap[osgGA::GUIEventAdapter::KEY_V] == true)
 			{
 				if (_cameraParams->fovy > 0)
-					_cameraParams->fovy -= 1;
+					_cameraParams->fovy += 1;
 			}
 		}
 
