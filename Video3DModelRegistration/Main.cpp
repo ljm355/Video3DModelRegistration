@@ -251,7 +251,7 @@ int main(int argc, char **argv)
 	viewer.addEventHandler(new osgViewer::ScreenCaptureHandler);
 
 	//viewer.realize();
-	_videoStreamer.openStream("E:/Video3DModelRegistration/JiashanVideo/WT909/20170717100000-20170717110150.mp4");
+	_videoStreamer.openStream("./20170717100000-20170717110150.mp4");
 	unsigned long counter = 0;
 
 	//osg::ref_ptr<osg::Image> videoFrame = _videoStreamer.getNextFrame();
