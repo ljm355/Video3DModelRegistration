@@ -10,22 +10,42 @@ CameraBuffer::CameraBuffer()
 
 void CameraBuffer::setupBuffer(int w, int h)
 {
-	_texture = new osg::Texture2D;
-	_texture->setTextureSize(w, h);
-	_texture->setResizeNonPowerOfTwoHint(false);
-	_texture->setFilter(osg::Texture2D::MIN_FILTER, osg::Texture2D::LINEAR);
-	_texture->setFilter(osg::Texture2D::MAG_FILTER, osg::Texture2D::LINEAR);
-	_texture->setWrap(osg::Texture2D::WRAP_S, osg::Texture2D::REPEAT);
-	_texture->setWrap(osg::Texture2D::WRAP_T, osg::Texture2D::REPEAT);
-	//rtTexture->setDataVariance(osg::Object::DYNAMIC);
-	_texture->setInternalFormat(GL_RGBA);
-	_texture->setSourceFormat(GL_RGBA);
-	_texture->setSourceType(GL_UNSIGNED_BYTE);
-	_image = new osg::Image;
-	_image->allocateImage(w, h, 1, GL_RGBA, GL_UNSIGNED_BYTE);
-	_texture->setImage(_image.get());
+	_colorTexture = new osg::Texture2D;
+	_colorTexture->setTextureSize(w, h);
+	_colorTexture->setResizeNonPowerOfTwoHint(false);
+	_colorTexture->setFilter(osg::Texture2D::MIN_FILTER, osg::Texture2D::LINEAR);
+	_colorTexture->setFilter(osg::Texture2D::MAG_FILTER, osg::Texture2D::LINEAR);
+	_colorTexture->setWrap(osg::Texture2D::WRAP_S, osg::Texture2D::REPEAT);
+	_colorTexture->setWrap(osg::Texture2D::WRAP_T, osg::Texture2D::REPEAT);
+	_colorTexture->setDataVariance(osg::Object::DYNAMIC);
+	_colorTexture->setInternalFormat(GL_RGBA);
+	_colorTexture->setSourceFormat(GL_RGBA);
+	_colorTexture->setSourceType(GL_UNSIGNED_BYTE);
+	_colorImage = new osg::Image;
+	_colorImage->allocateImage(w, h, 1, GL_RGBA, GL_UNSIGNED_BYTE);
+	_colorTexture->setImage(_colorImage.get());
 
-	//camera = new osg::Camera;
+	_positionTexture = new osg::Texture2D;
+	
+	_positionTexture->setTextureSize(w, h);
+	_positionTexture->setResizeNonPowerOfTwoHint(false);
+	_positionTexture->setFilter(osg::Texture2D::MIN_FILTER,osg::Texture2D::LINEAR);
+	_positionTexture->setFilter(osg::Texture2D::MAG_FILTER,osg::Texture2D::LINEAR);
+	_positionTexture->setWrap(osg::Texture2D::WRAP_S,osg::Texture2D::REPEAT);
+	_positionTexture->setWrap(osg::Texture2D::WRAP_T,osg::Texture2D::REPEAT);
+	_positionTexture->setDataVariance(osg::Object::DYNAMIC);
+	//_positionTexture->setInternalFormat(GL_RGBA);
+	//_positionTexture->setSourceFormat(GL_RGBA);
+	//_positionTexture->setSourceType(GL_UNSIGNED_BYTE);
+	//_positionTexture->setInternalFormat(GL_ALPHA32F_ARB);
+	//_positionTexture->setSourceFormat(GL_ALPHA);
+	//_positionTexture->setSourceType(GL_FLOAT);
+	_positionTexture->setInternalFormat(GL_RGBA32F_ARB);
+	_positionTexture->setSourceFormat(GL_RGBA);
+	_positionTexture->setSourceType(GL_FLOAT);
+	_positionImage = new osg::Image;
+	_positionImage->allocateImage(w, h,1,GL_RGBA, GL_FLOAT);
+	_positionTexture->setImage(_positionImage.get());
 
 	setClearMask(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	setClearColor(osg::Vec4(0, 0, 0, 0));
@@ -36,8 +56,11 @@ void CameraBuffer::setupBuffer(int w, int h)
 	setRenderOrder(osg::Camera::PRE_RENDER);
 	setRenderTargetImplementation(osg::Camera::FRAME_BUFFER_OBJECT);
 
-	attach(osg::Camera::COLOR_BUFFER0, _texture.get());
-	attach(osg::Camera::COLOR_BUFFER0, _image.get());
+	attach(osg::Camera::COLOR_BUFFER0, _colorTexture.get());
+	attach(osg::Camera::COLOR_BUFFER0, _colorImage.get());
+
+	attach(osg::Camera::COLOR_BUFFER1, _positionTexture.get());
+	attach(osg::Camera::COLOR_BUFFER1, _positionImage.get());
 
 }
 

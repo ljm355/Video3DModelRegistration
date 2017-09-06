@@ -12,5 +12,6 @@ public:
 	~ScreenOverlay();
 	void set3DModelTextureLayer(osg::Texture* tex);
 	void setVideoCameraTextureLayer(std::string filename);
+	osg::ref_ptr<osg::Texture2D> _videoTexture;
 };
 

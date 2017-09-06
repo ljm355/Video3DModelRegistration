@@ -137,11 +137,15 @@ void ScreenOverlay::set3DModelTextureLayer(osg::Texture* tex)
 
 void ScreenOverlay::setVideoCameraTextureLayer(std::string filename)
 {
-	osg::ref_ptr<osg::Texture2D> tex = new osg::Texture2D;
-	tex->setWrap(osg::Texture2D::WRAP_S, osg::Texture2D::CLAMP_TO_BORDER);
-	tex->setWrap(osg::Texture2D::WRAP_T, osg::Texture2D::CLAMP_TO_BORDER);
-	tex->setFilter(osg::Texture::MIN_FILTER, osg::Texture::NEAREST);
-	tex->setFilter(osg::Texture::MAG_FILTER, osg::Texture::NEAREST);
-	tex->setImage(osgDB::readImageFile(filename));
-	getOrCreateStateSet()->setTextureAttributeAndModes(1, tex.get(), osg::StateAttribute::ON);
+	_videoTexture = new osg::Texture2D;
+	_videoTexture->setWrap(osg::Texture2D::WRAP_S, osg::Texture2D::CLAMP_TO_BORDER);
+	_videoTexture->setWrap(osg::Texture2D::WRAP_T, osg::Texture2D::CLAMP_TO_BORDER);
+	_videoTexture->setFilter(osg::Texture::MIN_FILTER, osg::Texture::NEAREST);
+	_videoTexture->setFilter(osg::Texture::MAG_FILTER, osg::Texture::NEAREST);
+	_videoTexture->setResizeNonPowerOfTwoHint(false);
+	_videoTexture->setDataVariance(osg::Object::DYNAMIC);
+	osg::ref_ptr<osg::Image> img = osgDB::readImageFile(filename);
+	if(img && img.valid())
+	   _videoTexture->setImage(img.get());
+	getOrCreateStateSet()->setTextureAttributeAndModes(1, _videoTexture.get(), osg::StateAttribute::ON);
 }

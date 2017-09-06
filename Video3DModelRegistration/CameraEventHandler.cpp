@@ -21,17 +21,17 @@ bool CameraEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActi
 
 	if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN)
 	{
-		printf("%d down\n", ea.getKey());
+		//printf("%d down\n", ea.getKey());
 		_keydownmap[ea.getKey()] = true;
 	}
 	else if (ea.getEventType() == osgGA::GUIEventAdapter::KEYUP)
 	{
-		printf("%d up\n", ea.getKey());
+		//printf("%d up\n", ea.getKey());
 		_keydownmap[ea.getKey()] = false;
 	}
 	if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN)
 	{
-		printf("%d\n", ea.getKey());
+		//printf("%d\n", ea.getKey());
 		if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Minus)
 		{
 			if (_keydownmap[osgGA::GUIEventAdapter::KEY_A] == true)
@@ -55,12 +55,12 @@ bool CameraEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActi
 			}
 			else if (_keydownmap[osgGA::GUIEventAdapter::KEY_H] == true)
 			{
-				if (_cameraParams->fovx < 180)
+				if (_cameraParams->fovx > 0)
 					_cameraParams->fovx -= 1;
 			}
 			else if (_keydownmap[osgGA::GUIEventAdapter::KEY_V] == true)
 			{
-				if (_cameraParams->fovy < 180)
+				if (_cameraParams->fovy > 0)
 					_cameraParams->fovy -= 1;
 			}
 		}
@@ -87,12 +87,12 @@ bool CameraEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActi
 			}
 			else if (_keydownmap[osgGA::GUIEventAdapter::KEY_H] == true)
 			{
-				if (_cameraParams->fovx > 0)
+				if (_cameraParams->fovx < 180)
 					_cameraParams->fovx += 1;
 			}
 			else if (_keydownmap[osgGA::GUIEventAdapter::KEY_V] == true)
 			{
-				if (_cameraParams->fovy > 0)
+				if (_cameraParams->fovy < 180)
 					_cameraParams->fovy += 1;
 			}
 		}
@@ -130,7 +130,7 @@ bool CameraEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActi
 	}
 	_cameraParams->setMatrix();
 	_cameraMarker->updateMatrix();
-	if (ea.getEventType() == osgGA::GUIEventAdapter::KEYUP && ea.getKey() == osgGA::GUIEventAdapter::KEY_V)
+	if (ea.getEventType() == osgGA::GUIEventAdapter::KEYUP && ea.getKey() == osgGA::GUIEventAdapter::KEY_B)
 	{
 		printf("save camera configuration to: %s\n", _cameraParams->_filename.data());
 		_cameraParams->save();

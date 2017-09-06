@@ -163,6 +163,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="ScreenOverlay.cpp" />
+    <ClCompile Include="VideoStreamer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraBuffer.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="CameraParams.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="ScreenOverlay.h" />
+    <ClInclude Include="VideoStreamer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
