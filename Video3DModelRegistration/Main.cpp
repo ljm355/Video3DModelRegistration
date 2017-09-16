@@ -170,11 +170,15 @@ osg::Program* create3DModelShadersForVideoCameraScreen()
 //--------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-
+	std::string modeldir = argv[1];
+	if (modeldir[modeldir.size() - 1] != '\\' && modeldir[modeldir.size() - 1] != '/')
+		modeldir = modeldir + "/";
+	std::string videofile = argv[2];
+	std::string cameradatafile = argv[3];
 	osgViewer::Viewer viewer;
 	viewer.setUpViewAcrossAllScreens();
 	viewer.setUpViewInWindow(50, 50, 1024, 768);
-	osg::ref_ptr<osg::Node> city = ModelLoader::Load3DTiles("./Xianzhengfu/data/");
+	osg::ref_ptr<osg::Node> city = ModelLoader::Load3DTiles(modeldir);
 
 	_3DModelWrapperVideoCameraScreen = new osg::Group;
 	_3DModelWrapperVideoCameraScreen->addChild(city.get());
@@ -206,7 +210,7 @@ int main(int argc, char **argv)
 	matViewProjUniforms.push_back(_3DModelWrapperMainScreen->getOrCreateStateSet()->getUniform("videoMatrix"));
 
 	_cameraParams = new CameraParams(_CameraBuffer, matViewProjUniforms);
-	_cameraParams->_filename = "./camera.data";
+	_cameraParams->_filename = cameradatafile;
 	if (!_cameraParams->open())
 	{
 		osg::ComputeBoundsVisitor cbs;
@@ -251,7 +255,7 @@ int main(int argc, char **argv)
 	viewer.addEventHandler(new osgViewer::ScreenCaptureHandler);
 
 	//viewer.realize();
-	_videoStreamer.openStream("./20170717100000-20170717110150.mp4");
+	_videoStreamer.openStream(videofile);
 	unsigned long counter = 0;
 
 	//osg::ref_ptr<osg::Image> videoFrame = _videoStreamer.getNextFrame();
